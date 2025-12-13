@@ -1,0 +1,8 @@
+streamlit
+openai
+supabase
+python-dotenv
+beautifulsoup4
+requests
+pandas
+openpyxl
