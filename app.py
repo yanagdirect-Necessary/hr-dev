@@ -1,3 +1,4 @@
+
 import os
 import json
 import io
@@ -65,8 +66,18 @@ st.markdown(
 )
 
 
-def get_secret(key: str):
-    return st.secrets[key] if key in st.secrets else os.getenv(key)
+def get_secret(key: str, default: str | None = None):
+    # まず環境変数（Render の Environment Variables）を優先
+    v = os.getenv(key)
+    if v not in (None, ""):
+        return v
+
+    # 次に Streamlit secrets（ある場合だけ）
+    try:
+        return st.secrets.get(key, default)
+    except Exception:
+        # secrets.toml が無い環境でも落とさない
+        return default
 
 
 # =========================================================
